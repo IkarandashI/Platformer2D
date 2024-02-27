@@ -239,7 +239,7 @@ void APlayerPaperZDCharacter::TakeHit(AActor* DamagedActor, float Damage, const 
 {
 	if (Damage <= 0.f) return;
 
-	PlayerHUDref->DamagePLayer(Damage);
+	PlayerHUDref->DamagePlayer(Damage);
 	UGameplayStatics::PlayWorldCameraShake(GetWorld(), TakeHitCameraShake, GetActorLocation(), 0.f, 2000.f);
 	
 	if (AttributeComponent->GetHealth() <= 0.f)
