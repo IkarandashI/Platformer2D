@@ -328,7 +328,8 @@ void APlayerPaperZDCharacter::PlayerAttack()
 	{
 		if (HitResult.GetActor()->ActorHasTag(FName("Destroy")))
 		{
-			HitResult.GetActor()->Destroy();
+			//TODO: Do mechanics in C++
+			DamageBox(HitResult.GetActor());
 		}
 		if (Cast<APawn>(HitResult.GetActor()))
 		{
@@ -336,4 +337,10 @@ void APlayerPaperZDCharacter::PlayerAttack()
 			UGameplayStatics::ApplyDamage(HitResult.GetActor(), SwordDamage, Controller, this, DamageTypeClass);
 		}
 	}
+}
+
+
+void APlayerPaperZDCharacter::DamageBox_Implementation(AActor* Box)
+{
+	
 }
