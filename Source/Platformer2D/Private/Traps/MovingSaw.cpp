@@ -28,6 +28,7 @@ void AMovingSaw::BeginPlay()
 	Super::BeginPlay();
 
 	Sphere->OnComponentBeginOverlap.AddDynamic(this, &AMovingSaw::OverlapActor);
+	Sphere->OnComponentEndOverlap.AddDynamic(this, &AMovingSaw::EndOverlapActor);
 
 	InterpToMovement->Duration = Speed;
 }
@@ -36,11 +37,12 @@ void AMovingSaw::OverlapActor(UPrimitiveComponent* OverlappedComponent, AActor* 
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	APaperZDCharacter* Player = Cast<APaperZDCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-	if (OtherActor != nullptr && OtherActor == Player)
+	if (OtherActor != nullptr && OtherActor == Player  && DamageOnce == true)
 	{
 		TSubclassOf<class UDamageType> DamageTypeClass;
 		AController* EventInstigater = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 		UGameplayStatics::ApplyDamage(OtherActor, 1.f, EventInstigater, this, DamageTypeClass);
+		DamageOnce= false;
 
 		FVector From = OtherActor->GetActorLocation();
 		FVector To = GetActorLocation();
@@ -49,5 +51,11 @@ void AMovingSaw::OverlapActor(UPrimitiveComponent* OverlappedComponent, AActor* 
 		UKismetMathLibrary::GetDirectionUnitVector(From, To).X < 0.f ? VectorFloat = -1.f : VectorFloat = 1.f;
 		Player->LaunchCharacter(FVector(VectorFloat * -2000, 0.f, 150.f), false, false);
 	}
+}
+
+void AMovingSaw::EndOverlapActor(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	DamageOnce = true;
 }
 
