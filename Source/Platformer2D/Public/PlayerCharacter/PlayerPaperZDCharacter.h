@@ -64,6 +64,8 @@ protected:
 	
 	void Dash();
 	
+	UFUNCTION(BlueprintNativeEvent)
+	void DamageBox(AActor* Box);
 	
 	UFUNCTION(BlueprintCallable)
 	void Respawn();

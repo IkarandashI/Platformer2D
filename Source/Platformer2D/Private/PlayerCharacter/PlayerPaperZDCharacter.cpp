@@ -313,6 +313,7 @@ void APlayerPaperZDCharacter::PlayerAttack()
 	
 	TArray<TEnumAsByte<EObjectTypeQuery>> ObjectTypes;
 	ObjectTypes.Add(UEngineTypes::ConvertToObjectType(ECC_Pawn));
+	ObjectTypes.Add(UEngineTypes::ConvertToObjectType(ECC_WorldDynamic));
 
 	TArray<AActor*> ActorsToIgnore;
 	ActorsToIgnore.Add(this);
@@ -321,9 +322,25 @@ void APlayerPaperZDCharacter::PlayerAttack()
 	bool bHit = UKismetSystemLibrary::LineTraceSingleForObjects(GetWorld(), Start, End, ObjectTypes, false, ActorsToIgnore,
 		EDrawDebugTrace::None, HitResult, true);
 
+	
+
 	if (bHit)
 	{
-		TSubclassOf<class UDamageType> DamageTypeClass;
-		UGameplayStatics::ApplyDamage(HitResult.GetActor(), SwordDamage, Controller, this, DamageTypeClass);
+		if (HitResult.GetActor()->ActorHasTag(FName("Destroy")))
+		{
+			//TODO: Do mechanics in C++
+			DamageBox(HitResult.GetActor());
+		}
+		if (Cast<APawn>(HitResult.GetActor()))
+		{
+			TSubclassOf<class UDamageType> DamageTypeClass;
+			UGameplayStatics::ApplyDamage(HitResult.GetActor(), SwordDamage, Controller, this, DamageTypeClass);
+		}
 	}
+}
+
+
+void APlayerPaperZDCharacter::DamageBox_Implementation(AActor* Box)
+{
+	
 }
