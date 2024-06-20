@@ -5,7 +5,6 @@
 
 #include "PaperZDAnimInstance.h"
 #include "ActorComponent/AttributeComponent.h"
-#include "BehaviorTree/BehaviorTreeTypes.h"
 #include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/WidgetComponent.h"

@@ -65,12 +65,12 @@ protected:
 	class UEnemyHealthBar* HealthBarref;
 	
 private:
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
 	class UAttributeComponent* AttributeComponent;
 	
 	UPROPERTY(VisibleAnywhere)
 	class UBoxComponent* BoxComponent;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
 	class UWidgetComponent* WidgetComponent;
 };
